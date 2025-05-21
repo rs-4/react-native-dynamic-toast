@@ -2,7 +2,6 @@
 
 A React Native component that mimics the iOS Dynamic Island notification style for cross-platform mobile applications.
 
-
 ## Features
 
 - Animated expanding/collapsing notification like iOS Dynamic Island
@@ -11,7 +10,7 @@ A React Native component that mimics the iOS Dynamic Island notification style f
 - Responsive design that adapts to different screen sizes
 - Context-based usage through a custom hook
 
-## Warning 
+## Warning
 
 ⚠️ **IMPORTANT**: You must replace all `<StatusBar>` components in your application with the store-connected version for the component to work properly. If you don't modify all StatusBar instances, the status bar icons may remain visible while Dynamic Island notifications are displayed, which will negatively impact the user experience.
 
@@ -22,14 +21,14 @@ import { useStatusBarStore } from '@/components/playground/DynamicNotifications/
 
 function MyScreen() {
   const { hidden } = useStatusBarStore.getState();
-  
+
   return (
     <>
-      <StatusBar 
-        translucent 
-        backgroundColor="transparent" 
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
         hidden={hidden} // This prop is CRUCIAL
-        barStyle="light-content" 
+        barStyle="light-content"
       />
       {/* Your screen content */}
     </>
@@ -42,6 +41,7 @@ The `hidden={hidden}` prop is essential for the system to correctly hide the sta
 ## Installation
 
 No additional installation required if you're already using this codebase. The component uses:
+
 - `react-native-reanimated` for animations
 - `zustand` for state management
 
@@ -56,12 +56,13 @@ import { useDynamicIsland } from '@/components/playground/DynamicNotifications/c
 
 function MyComponent() {
   const { showNotification } = useDynamicIsland();
-  
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
         style={styles.button}
-        onPress={() => showNotification('⭐ Hello user, how are you today?')}>
+        onPress={() => showNotification('⭐ Hello user, how are you today?')}
+      >
         <Text style={styles.text}>Show notification</Text>
       </TouchableOpacity>
     </View>
@@ -84,17 +85,25 @@ type DynamicIslandContextType = {
   showNotification: (message: string) => void;
 };
 
-const DynamicIslandContext = createContext<DynamicIslandContextType | undefined>(undefined);
+const DynamicIslandContext = createContext<
+  DynamicIslandContextType | undefined
+>(undefined);
 
 export const useDynamicIsland = () => {
   const context = useContext(DynamicIslandContext);
   if (!context) {
-    throw new Error('useDynamicIsland must be used within a DynamicIslandProvider');
+    throw new Error(
+      'useDynamicIsland must be used within a DynamicIslandProvider'
+    );
   }
   return context;
 };
 
-export const DynamicIslandProvider = ({ children }: { children: React.ReactNode }) => {
+export const DynamicIslandProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const [message, setMessage] = useState('');
   const [visible, setVisible] = useState(false);
 
@@ -106,7 +115,12 @@ export const DynamicIslandProvider = ({ children }: { children: React.ReactNode 
   return (
     <DynamicIslandContext.Provider value={{ showNotification }}>
       {children}
-      {visible && <DynamicIslandNotification message={message} onHide={() => setVisible(false)} />}
+      {visible && (
+        <DynamicIslandNotification
+          message={message}
+          onHide={() => setVisible(false)}
+        />
+      )}
     </DynamicIslandContext.Provider>
   );
 };
@@ -122,11 +136,7 @@ import React from 'react';
 import { DynamicIslandProvider } from '@/components/playground/DynamicNotifications/context';
 
 export default function RootLayout({ children }) {
-  return (
-    <DynamicIslandProvider>
-      {children}
-    </DynamicIslandProvider>
-  );
+  return <DynamicIslandProvider>{children}</DynamicIslandProvider>;
 }
 ```
 
@@ -151,7 +161,7 @@ export const useStatusBarStore = create<StatusBarStore>((set) => ({
 }));
 ```
 
-2. Update your _layout.tsx file to manage StatusBar visibility:
+2. Update your \_layout.tsx file to manage StatusBar visibility:
 
 ```tsx
 // app/_layout.tsx
@@ -162,7 +172,7 @@ import { DynamicIslandProvider } from '@/components/playground/DynamicNotificati
 
 export default function RootLayout({ children }) {
   const hidden = useStatusBarStore((state) => state.hidden);
-  
+
   return (
     <DynamicIslandProvider>
       <StatusBar translucent backgroundColor="transparent" hidden={hidden} />
@@ -195,10 +205,15 @@ import { useStatusBarStore } from '@/components/playground/DynamicNotifications/
 
 export default function MyScreen() {
   const hidden = useStatusBarStore((state) => state.hidden);
-  
+
   return (
     <>
-      <StatusBar translucent backgroundColor="transparent" hidden={hidden} style="light" />
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        hidden={hidden}
+        style="light"
+      />
       {/* Your component content */}
     </>
   );
@@ -211,14 +226,14 @@ export default function MyScreen() {
 
 The `useDynamicIsland` hook provides:
 
-| Method | Type | Description |
-|------|------|-------------|
+| Method             | Type                      | Description                                               |
+| ------------------ | ------------------------- | --------------------------------------------------------- |
 | `showNotification` | (message: string) => void | Function to display a notification with the given message |
 
 ### DynamicIslandProvider Props
 
-| Prop | Type | Description |
-|------|------|-------------|
+| Prop       | Type      | Description                                          |
+| ---------- | --------- | ---------------------------------------------------- |
 | `children` | ReactNode | The child components to be wrapped with the provider |
 
 ## Customization
@@ -227,11 +242,11 @@ You can customize the appearance and behavior of the Dynamic Island notification
 
 ```tsx
 // Base values for responsive dimension calculations
-const BASE_DYNAMIC_ISLAND_HEIGHT = 38;         // Default island height
-const BASE_DYNAMIC_ISLAND_MIN_WIDTH = 126;     // Minimum width when collapsed
-const BASE_DYNAMIC_ISLAND_MAX_WIDTH = 350;     // Maximum width when expanded
+const BASE_DYNAMIC_ISLAND_HEIGHT = 38; // Default island height
+const BASE_DYNAMIC_ISLAND_MIN_WIDTH = 126; // Minimum width when collapsed
+const BASE_DYNAMIC_ISLAND_MAX_WIDTH = 350; // Maximum width when expanded
 const BASE_DYNAMIC_ISLAND_EXPANDED_HEIGHT = 90; // Height when expanded
-const ANIMATION_DURATION = 350;                // Duration of animations in ms
+const ANIMATION_DURATION = 350; // Duration of animations in ms
 ```
 
 ## Animation Timing
@@ -241,10 +256,10 @@ The component uses spring animations with customized parameters for a natural, b
 ```tsx
 // For expansion animation
 expansion.value = withSpring(1, {
-  damping: 10,     // Moderate damping for natural bounce
-  stiffness: 100,  // Moderate stiffness
-  velocity: 3,     // Initial velocity for quick start
-  mass: 0.7,       // Lighter mass for quicker movement
+  damping: 10, // Moderate damping for natural bounce
+  stiffness: 100, // Moderate stiffness
+  velocity: 3, // Initial velocity for quick start
+  mass: 0.7, // Lighter mass for quicker movement
   overshootClamping: false, // Allow overshooting for bounce effect
   restDisplacementThreshold: 0.01,
   restSpeedThreshold: 2,
@@ -254,7 +269,8 @@ expansion.value = withSpring(1, {
 ## Contributing
 
 Feel free to modify this component to fit your specific needs. Some potential enhancements:
+
 - Add support for different notification types (success, error, warning)
 - Add an icon to the notification
 - Support for actions buttons within the notification
-- Custom durations for different notifications 
+- Custom durations for different notifications

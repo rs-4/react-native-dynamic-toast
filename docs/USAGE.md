@@ -11,14 +11,12 @@ import { notif } from 'react-native-dynamic-toast';
 
 function SuccessExample() {
   const notification = notif();
-  
+
   const handleSuccess = () => {
-    notification.success("Operation completed successfully");
+    notification.success('Operation completed successfully');
   };
-  
-  return (
-    <Button title="Show Success" onPress={handleSuccess} />
-  );
+
+  return <Button title="Show Success" onPress={handleSuccess} />;
 }
 ```
 
@@ -29,18 +27,16 @@ import { notif } from 'react-native-dynamic-toast';
 
 function ErrorExample() {
   const notification = notif();
-  
+
   const handleError = () => {
-    notification.failed("An error occurred", {
+    notification.failed('An error occurred', {
       textColor: '#F44336',
       showShadow: true,
       shadowColor: '#F44336',
     });
   };
-  
-  return (
-    <Button title="Show Error" onPress={handleError} />
-  );
+
+  return <Button title="Show Error" onPress={handleError} />;
 }
 ```
 
@@ -51,16 +47,14 @@ import { notif } from 'react-native-dynamic-toast';
 
 function ToastExample() {
   const notification = notif();
-  
+
   const showToast = () => {
-    notification.toaster("Information message", {
+    notification.toaster('Information message', {
       autoHideDelay: 2000, // 2 seconds
     });
   };
-  
-  return (
-    <Button title="Show Toast" onPress={showToast} />
-  );
+
+  return <Button title="Show Toast" onPress={showToast} />;
 }
 ```
 
@@ -71,12 +65,12 @@ function ToastExample() {
 You can customize the appearance of notifications using various options:
 
 ```jsx
-notification.success("Customized notification", {
-  textColor: '#4CAF50',           // Custom text color
-  showShadow: true,               // Enable shadow
+notification.success('Customized notification', {
+  textColor: '#4CAF50', // Custom text color
+  showShadow: true, // Enable shadow
   shadowColor: 'rgba(0,0,0,0.5)', // Custom shadow color
-  borderColor: '#E0E0E0',         // Custom border color
-  enableHaptics: true,            // Enable haptic feedback
+  borderColor: '#E0E0E0', // Custom border color
+  enableHaptics: true, // Enable haptic feedback
 });
 ```
 
@@ -86,13 +80,13 @@ Control how long notifications remain visible:
 
 ```jsx
 // Show for 5 seconds (5000ms)
-notification.success("This will show for 5 seconds", {
-  autoHideDelay: 5000
+notification.success('This will show for 5 seconds', {
+  autoHideDelay: 5000,
 });
 
 // Show for 10 seconds
-notification.failed("Longer error message", {
-  autoHideDelay: 10000
+notification.failed('Longer error message', {
+  autoHideDelay: 10000,
 });
 ```
 
@@ -109,25 +103,25 @@ import { notif } from 'react-native-dynamic-toast';
 function PersistentExample() {
   const notification = notif();
   const closeRef = useRef(null);
-  
+
   const showPersistent = () => {
-    notification.success("This notification will stay", {
+    notification.success('This notification will stay', {
       disableAutoHide: true,
     });
-    
+
     // Store reference to close function
     setTimeout(() => {
       closeRef.current = notification.getCloseRef();
     }, 500);
   };
-  
+
   const closePersistent = () => {
     if (closeRef.current) {
       closeRef.current();
       closeRef.current = null;
     }
   };
-  
+
   return (
     <View>
       <Button title="Show Persistent" onPress={showPersistent} />
@@ -147,25 +141,25 @@ import { View, Text, StyleSheet } from 'react-native';
 
 function CustomContentExample() {
   const notification = notif();
-  
+
   const CustomComponent = () => (
     <View style={styles.container}>
       <Text style={styles.title}>Custom Title</Text>
-      <Text style={styles.message}>This is a completely custom notification</Text>
+      <Text style={styles.message}>
+        This is a completely custom notification
+      </Text>
       <Text style={styles.message}>With multiple lines of text</Text>
     </View>
   );
-  
+
   const showCustom = () => {
     notification.showCustom(<CustomComponent />, {
       showShadow: true,
       autoHideDelay: 5000,
     });
   };
-  
-  return (
-    <Button title="Show Custom Content" onPress={showCustom} />
-  );
+
+  return <Button title="Show Custom Content" onPress={showCustom} />;
 }
 
 const styles = StyleSheet.create({
@@ -193,18 +187,18 @@ You can override the automatic device detection and force a specific notificatio
 
 ```jsx
 // Force Dynamic Island style
-notification.success("Dynamic Island style", {
-  forceStyle: 'dynamicIsland'
+notification.success('Dynamic Island style', {
+  forceStyle: 'dynamicIsland',
 });
 
 // Force Notch style
-notification.success("Notch style", {
-  forceStyle: 'notch'
+notification.success('Notch style', {
+  forceStyle: 'notch',
 });
 
 // Force Toast style
-notification.success("Toast style", {
-  forceStyle: 'toast'
+notification.success('Toast style', {
+  forceStyle: 'toast',
 });
 ```
 
@@ -214,7 +208,7 @@ notification.success("Toast style", {
 2. **Use appropriate types**: Use success for confirmations, failed for errors, and toaster for informational messages
 3. **Consider device differences**: Test on different devices to ensure your notifications look good across all styles
 4. **Custom content**: When using custom content, keep it simple and ensure it works well with flexible heights
-5. **Haptic feedback**: Use haptic feedback sparingly to avoid overwhelming the user 
+5. **Haptic feedback**: Use haptic feedback sparingly to avoid overwhelming the user
 
 ## Important: StatusBar Configuration
 
@@ -227,17 +221,17 @@ import { useStatusBarVisibility } from 'react-native-dynamic-toast';
 function YourScreen() {
   // Get the current hidden state from the library
   const { hidden } = useStatusBarVisibility();
-  
+
   return (
     <>
       {/* This configuration is essential for proper notification display */}
-      <StatusBar 
-        translucent 
-        backgroundColor="transparent" 
-        hidden={hidden} 
-        barStyle="light-content" 
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        hidden={hidden}
+        barStyle="light-content"
       />
-      
+
       {/* Your screen content */}
     </>
   );
@@ -253,21 +247,24 @@ If you're using React Navigation or a similar router, you should configure the S
 import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { NotificationProvider, useStatusBarVisibility } from 'react-native-dynamic-toast';
+import {
+  NotificationProvider,
+  useStatusBarVisibility,
+} from 'react-native-dynamic-toast';
 
 const Stack = createStackNavigator();
 
 function AppContent() {
   // Get the visibility state to pass to the StatusBar
   const { hidden } = useStatusBarVisibility();
-  
+
   return (
     <>
-      <StatusBar 
-        translucent 
-        backgroundColor="transparent" 
-        hidden={hidden} 
-        barStyle="light-content" 
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        hidden={hidden}
+        barStyle="light-content"
       />
       <NavigationContainer>
         <Stack.Navigator>
@@ -296,4 +293,4 @@ When a notification appears in the Dynamic Island or Notch style, the library ne
 2. The status bar icons will appear on top of your notification
 3. The animation won't look seamless and professional
 
-Make sure to apply this configuration to **every screen** in your app where you define a StatusBar. 
+Make sure to apply this configuration to **every screen** in your app where you define a StatusBar.
