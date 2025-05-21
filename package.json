@@ -1,5 +1,5 @@
 {
-  "name": "react-native-dynamic-notifications",
+  "name": "react-native-dynamic-toast",
   "version": "0.1.0",
   "description": "dynamicIsland notifications for IOS only",
   "main": "./lib/module/index.js",
@@ -32,7 +32,7 @@
     "!**/.*"
   ],
   "scripts": {
-    "example": "yarn workspace react-native-dynamic-notifications-example",
+    "example": "yarn workspace react-native-dynamic-toast-example",
     "test": "jest",
     "typecheck": "tsc",
     "lint": "eslint \"**/*.{js,ts,tsx}\"",
@@ -47,14 +47,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rs-4/react-native-dynamic-notifications.git"
+    "url": "git+https://github.com/rs-4/react-native-dynamic-toast.git"
   },
   "author": "rs4 <rayanselmi100@gmail.com> (https://github.com/rs-4)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/rs-4/react-native-dynamic-notifications/issues"
+    "url": "https://github.com/rs-4/react-native-dynamic-toast/issues"
   },
-  "homepage": "https://github.com/rs-4/react-native-dynamic-notifications#readme",
+  "homepage": "https://github.com/rs-4/react-native-dynamic-toast#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
@@ -150,5 +150,13 @@
     "languages": "js",
     "type": "library",
     "version": "0.50.3"
+  },
+  "dependencies": {
+    "expo-device": "^7.1.4",
+    "expo-haptics": "^14.1.4",
+    "lucide-react-native": "^0.511.0",
+    "react-native-reanimated": "^3.17.5",
+    "react-native-svg": "^15.12.0",
+    "zustand": "^5.0.4"
   }
 }

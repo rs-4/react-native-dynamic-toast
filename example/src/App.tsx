@@ -1,19 +1,21 @@
-import { Text, View, StyleSheet } from 'react-native';
-import { multiply } from 'react-native-dynamic-notifications';
-
-const result = multiply(3, 7);
+import { View, StyleSheet } from 'react-native';
+import { NotificationProvider } from './lib/index';
+import NotificationDemo from './NotificationDemo';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Result: {result}</Text>
-    </View>
+    <NotificationProvider>
+      <View style={styles.container}>
+        <NotificationDemo />
+      </View>
+    </NotificationProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },

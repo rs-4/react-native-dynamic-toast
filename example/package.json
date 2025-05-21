@@ -1,5 +1,5 @@
 {
-  "name": "react-native-dynamic-notifications-example",
+  "name": "react-native-dynamic-toast-example",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
